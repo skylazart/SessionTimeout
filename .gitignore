@@ -1,8 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
 # Compiled class file
-*.class
-
 # Log file
 *.log
 
@@ -13,7 +11,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip
@@ -49,6 +46,7 @@ hs_err_pid*
 
 # IntelliJ
 /out/
+/target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -70,7 +68,3 @@ fabric.properties
 out
 gen
 .gitignore
-.idea/
-SessionTimeout.iml
-src/test/
-target/
