@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Tab id="tab1" fx:id="sessionTab" text="1" xmlns="http://javafx.com/javafx/8.0.152-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="burp.controller.TabController">
+   <content>
+      <AnchorPane id="sessionTestAnchorPane1" fx:id="anchorPane" prefHeight="607.0" prefWidth="668.0">
+         <children>
+            <Label layoutX="77.0" layoutY="48.0" text="Validating session timeout" textFill="#ff8e00" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <Separator layoutX="10.0" layoutY="52.0" prefHeight="3.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
+            <Label layoutX="20.0" layoutY="70.0" text="Request" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="txtRequest" layoutX="14.0" layoutY="95.0" prefHeight="225.0" prefWidth="575.0" style="-fx-font: 12px Verdana;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="95.0">
+               <font>
+                  <Font size="11.0" />
+               </font></TextArea>
+            <GridPane layoutX="20.0" layoutY="314.0" prefHeight="19.0" prefWidth="348.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="338.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="29.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="116.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="205.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Expected result" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField GridPane.columnIndex="2" />
+                  <ImageView fx:id="imgHelp" fitHeight="79.0" fitWidth="23.0" onMouseClicked="#onHelpClick" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@help.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <Separator layoutY="383.0" prefHeight="3.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="383.0" />
+            <Label layoutX="15.0" layoutY="396.0" text="Results" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="396.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tblView" layoutX="15.0" layoutY="424.0" prefHeight="205.0" prefWidth="575.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="424.0">
+               <columns>
+                  <TableColumn fx:id="tblTimeColumn" prefWidth="146.0" style="-fx-font: 12px Verdana;" text="Time" />
+                  <TableColumn fx:id="tblResultColumn" prefWidth="427.0" style="-fx-font: 12px Verdana;" text="Result" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <ButtonBar fx:id="buttonBar" layoutX="390.0" layoutY="328.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.topAnchor="328.0">
+               <buttons>
+                  <Button fx:id="buttonStart" defaultButton="true" mnemonicParsing="false" onAction="#btnStart" text="Start">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonCancel" cancelButton="true" disable="true" mnemonicParsing="false" onAction="#btnCancel" text="Cancel">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+               </buttons>
+            </ButtonBar>
+            <ProgressBar fx:id="progress" layoutX="15.0" layoutY="648.0" prefHeight="20.0" prefWidth="575.0" progress="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="648.0" />
+            <Label layoutX="15.0" layoutY="668.0" text="Elapsed time:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="668.0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblElapsedTime" layoutX="97.0" layoutY="668.0" text="0 minute(s)" textFill="#0400ff" AnchorPane.topAnchor="668.0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+</Tab>
