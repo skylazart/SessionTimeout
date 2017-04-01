@@ -20,16 +20,19 @@ import java.io.Serializable;
 public class BurpOutputLogAppender extends AbstractAppender {
     private static volatile BurpOutputLogAppender instance;
 
+    private BurpLogWriterSingleton burpWriter;
+
     public BurpOutputLogAppender(String name, Filter filter, Layout<? extends Serializable> layout,
                                  boolean ignoreExceptions) {
         super(name, filter, layout, ignoreExceptions);
+        burpWriter = BurpLogWriterSingleton.getInstance();
     }
 
     @Override
     public void append(LogEvent logEvent) {
         final byte[] b = getLayout().toByteArray(logEvent);
         String s = new String(b);
-        System.out.println("HEY: " + s);
+        burpWriter.logMsg(s);
     }
 
     @PluginFactory
@@ -47,7 +50,10 @@ public class BurpOutputLogAppender extends AbstractAppender {
         if (layout == null) {
             layout = PatternLayout.createDefaultLayout();
         }
+
+        // Save instance
         instance = new BurpOutputLogAppender(name, filter, layout, true);
+
         return instance;
     }
 

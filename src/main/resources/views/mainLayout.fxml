@@ -112,7 +112,7 @@
                            </effect>
                         </Label>
                         <Separator layoutY="42.0" prefHeight="3.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-                        <TextArea editable="false" layoutX="20.0" layoutY="52.0" prefHeight="165.0" prefWidth="575.0" text="&#10;Author: Felipe Cerqueira&#10;I am a security consultant at Trustwave SpiderLabs.&#10;&#10;Contact: skylazart@gmail.com&#10;&#10;Please, feel free to visit our github and contribute improving this tool:&#10;http://github.com/skylazart/SessionTimeout&#10;&#10;Thanks" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="52.0">
+                        <TextArea editable="false" layoutX="20.0" layoutY="52.0" prefHeight="165.0" prefWidth="575.0" text="&#10;Author: Felipe Cerqueira&#10;I am a security consultant at Trustwave SpiderLabs.&#10;&#10;Contact: skylazart@gmail.com&#10;&#10;Please, feel free to visit my Github and contribute improving this tool:&#10;http://github.com/skylazart/SessionTimeout&#10;&#10;Thanks" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="52.0">
                            <font>
                               <Font name="Verdana" size="11.0" />
                            </font>

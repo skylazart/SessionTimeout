@@ -60,7 +60,7 @@ public class TabController {
 
     @FXML
     void btnCancel(ActionEvent event) {
-        currentProgress += 0.1;
+        currentProgress += 0.02;
         progress.setProgress(currentProgress);
     }
 

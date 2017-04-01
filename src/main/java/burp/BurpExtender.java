@@ -1,6 +1,7 @@
 package burp;
 
 import burp.UI.MainTab;
+import burp.logappender.BurpLogWriterSingleton;
 import burp.message.RequestMessage;
 import burp.notifier.MessageUpdateNotifier;
 import burp.notifier.NotifierRequestMessageSingleton;
@@ -32,6 +33,9 @@ public class BurpExtender implements IBurpExtender, IExtensionStateListener, Act
         callbacks.registerExtensionStateListener(this);
 
         callbacks.addSuiteTab(new MainTab(callbacks));
+
+        // Setting log appender
+        BurpLogWriterSingleton.getInstance().setWriter(stdout);
     }
 
     public void extensionUnloaded() {
