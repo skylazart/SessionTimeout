@@ -2,18 +2,20 @@ package burp.controller;
 
 import burp.uifactory.LayoutFactory;
 import burp.uifactory.UITypes;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,11 +72,6 @@ public class MainController {
     private CheckBox chk24m;
 
     @FXML
-    void startClicked(MouseEvent event) {
-        System.out.println("Starting..." + event);
-    }
-
-    @FXML
     void initialize() {
         assert mainLayout != null : "fx:id=\"mainLayout\" was not injected: check your FXML file 'mainLayout.fxml'.";
         assert tabPaneSessions != null : "fx:id=\"tabPaneSessions\" was not injected: check your FXML file 'mainLayout.fxml'.";
@@ -91,17 +88,34 @@ public class MainController {
         assert chk24m != null : "fx:id=\"chk24m\" was not injected: check your FXML file 'mainLayout.fxml'.";
 
         updateTotalOfTime();
-        /*
+
         try {
             Tab t = LayoutFactory.makeLayout(UITypes.TAB_LAYOUT);
+            t.setText("Test 1");
+            t.setId("Test 1");
             Node n = t.getContent();
-            n.addEventHandler(ActionEvent.ACTION, event -> System.out.println("T2 handling" + event));
+            //n.addEventHandler(ActionEvent.ACTION, event -> System.out.println("T2 handling" + event));
             tabPaneSessions.getTabs().add(t);
 
+            Tab t2 = LayoutFactory.makeLayout(UITypes.TAB_LAYOUT);
+            t2.setText("Test 2");
+            t2.setId("Test 2");
+            Node n2 = t2.getContent();
+            //n2.addEventHandler(ActionEvent.ACTION, event -> System.out.println("T3 handling" + event));
+            tabPaneSessions.getTabs().add(t2);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
+
+
+//        Tab addTab = new Tab("New");
+//        addTab.setClosable(false);
+//        addTab.setOnSelectionChanged(event -> {
+//            System.out.println("adding");
+//            tabPaneSessions.getSelectionModel().select(1);
+//        });
+//
+//        tabPaneSessions.getTabs().add(addTab);
     }
 
     @FXML

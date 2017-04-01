@@ -1,4 +1,7 @@
-package burp;/**
+package burp;
+
+
+/**
  * Burp extension - session timeout verifier
  * Created by FSantos@trustwave.com on 3/29/17.
  */
@@ -10,10 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public class MainApplication extends Application {
+    private static final Logger logger = LogManager.getLogger();
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -25,6 +31,8 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        logger.info("Testando");
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Test application");
 

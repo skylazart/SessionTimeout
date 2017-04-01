@@ -4,6 +4,8 @@ import burp.UI.MainTab;
 import burp.message.RequestMessage;
 import burp.notifier.MessageUpdateNotifier;
 import burp.notifier.NotifierRequestMessageSingleton;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +16,8 @@ import java.util.List;
 
 
 public class BurpExtender implements IBurpExtender, IExtensionStateListener, ActionListener, IContextMenuFactory {
+    private static final Logger logger = LogManager.getLogger();
+
     private static final String SEND_TO_SESSION_TIMEOUT = "SEND TO SESSION TIMEOUT";
     private static final String SEND_TO_SESSION_TIMEOUT_MENU_ITEM = "Send to Session Timeout";
 
