@@ -1,6 +1,9 @@
 package burp;
 
 import burp.UI.MainTab;
+import burp.message.RequestMessage;
+import burp.notifier.MessageUpdateNotifier;
+import burp.notifier.NotifierRequestMessageSingleton;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,17 +14,13 @@ import java.util.List;
 
 
 public class BurpExtender implements IBurpExtender, IExtensionStateListener, ActionListener, IContextMenuFactory {
-    public static final String SEND_TO_SESSION_TIMEOUT = "SEND TO SESSION TIMEOUT";
-    public static final String SEND_TO_SESSION_TIMEOUT_MENU_ITEM = "Send to Session Timeout";
+    private static final String SEND_TO_SESSION_TIMEOUT = "SEND TO SESSION TIMEOUT";
+    private static final String SEND_TO_SESSION_TIMEOUT_MENU_ITEM = "Send to Session Timeout";
 
-    private IBurpExtenderCallbacks callbacks;
     private PrintWriter stdout;
     private IHttpRequestResponse[] messages = null;
 
-    private SessionNotifierCreationSingleton sessionNotifierCreationSingleton = SessionNotifierCreationSingleton.getInstance();
-
     public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks) {
-        this.callbacks = callbacks;
         callbacks.setExtensionName("Session timeout");
         stdout = new PrintWriter(callbacks.getStdout(), true);
 
@@ -42,6 +41,7 @@ public class BurpExtender implements IBurpExtender, IExtensionStateListener, Act
 
         if (selectedContext == IContextMenuInvocation.CONTEXT_MESSAGE_EDITOR_REQUEST ||
                 selectedContext == IContextMenuInvocation.CONTEXT_MESSAGE_VIEWER_REQUEST) {
+
             List<JMenuItem> menu = new ArrayList<>();
             JMenuItem sendToSessionTimeout = new JMenuItem(SEND_TO_SESSION_TIMEOUT_MENU_ITEM);
             sendToSessionTimeout.setActionCommand(SEND_TO_SESSION_TIMEOUT);
@@ -66,12 +66,11 @@ public class BurpExtender implements IBurpExtender, IExtensionStateListener, Act
     }
 
     private void sendToSessionTimeout() {
+        MessageUpdateNotifier<RequestMessage> notifier = NotifierRequestMessageSingleton.getInstance().getNotifier();
         if (messages != null) {
             for (IHttpRequestResponse requestResponse : messages) {
-                stdout.println("-->> Sending to session timeout Tab");
-                sessionNotifierCreationSingleton.update(new RequestMessage(requestResponse));
+                notifier.update(new RequestMessage(requestResponse));
             }
-
             messages = null;
         }
     }

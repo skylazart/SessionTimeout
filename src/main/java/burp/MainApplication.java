@@ -3,8 +3,9 @@ package burp;/**
  * Created by FSantos@trustwave.com on 3/29/17.
  */
 
+import burp.uifactory.LayoutFactory;
+import burp.uifactory.UITypes;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -16,7 +17,7 @@ public class MainApplication extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private AnchorPane testSessionPane;
+    private AnchorPane mainLayout;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,23 +30,19 @@ public class MainApplication extends Application {
 
         try {
             initRootLayout();
-            showSessionTestLayout();
+            showMainLayout();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void showSessionTestLayout() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/view/optionsLayout.fxml"));
-        testSessionPane = loader.load();
-        rootLayout.setTop(testSessionPane);
+    private void showMainLayout() throws IOException {
+        mainLayout = LayoutFactory.makeLayout(UITypes.MAIN_LAYOUT);
+        rootLayout.setCenter(mainLayout);
     }
 
     private void initRootLayout() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/view/rootLayout.fxml"));
-        rootLayout = loader.load();
+        rootLayout = LayoutFactory.makeLayout(UITypes.ROOT_LAYOUT);
 
         Scene scene = new Scene(rootLayout);
         primaryStage.setScene(scene);

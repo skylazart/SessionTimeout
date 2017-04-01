@@ -1,4 +1,6 @@
-package burp;
+package burp.message;
+
+import burp.IHttpRequestResponse;
 
 import java.util.Observable;
 
