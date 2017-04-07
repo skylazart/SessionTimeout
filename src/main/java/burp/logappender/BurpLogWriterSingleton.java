@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class BurpLogWriterSingleton {
     private static BurpLogWriterSingleton instance = null;
-    private static Object mutex;
+    private static Object mutex = new Object();
 
     private Queue<String> queue;
     private Timer timer;
@@ -33,9 +33,13 @@ public class BurpLogWriterSingleton {
     }
 
     private void flushLogs() {
+        if (outputWriter == null)
+            return;
+
         while (!queue.isEmpty()) {
             String s = queue.remove();
-            outputWriter.write(s);
+            outputWriter.print(s);
+            outputWriter.flush();
         }
     }
 
@@ -53,9 +57,11 @@ public class BurpLogWriterSingleton {
     }
 
     public void logMsg(String msg) {
-        if (outputWriter == null)
+        if (this.outputWriter == null)
             queue.add(msg);
-        else
-            outputWriter.write(msg);
+        else {
+            outputWriter.print(msg);
+            outputWriter.flush();
+        }
     }
 }

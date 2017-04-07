@@ -16,6 +16,7 @@ import java.io.Serializable;
  * Burp extension - session timeout verifier
  * Created by FSantos@trustwave.com on 4/1/17.
  */
+@SuppressWarnings("unused")
 @Plugin(name="Burp", category="Core", elementType="appender", printObject=true)
 public class BurpOutputLogAppender extends AbstractAppender {
     private static volatile BurpOutputLogAppender instance;

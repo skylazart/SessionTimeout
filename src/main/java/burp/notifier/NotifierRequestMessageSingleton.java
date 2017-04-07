@@ -1,26 +1,26 @@
 package burp.notifier;
 
-import burp.message.RequestMessage;
+import burp.message.BurpRequestMessage;
 
 /**
  * Burp extension - session timeout verifier
  * Created by FSantos@trustwave.com on 3/31/17.
  */
-public class NotifierRequestMessageSingleton<T> {
+public class NotifierRequestMessageSingleton {
     private static NotifierRequestMessageSingleton instance = null;
-    private MessageUpdateNotifier<RequestMessage> notifier;
+    private MessageUpdateNotifier<BurpRequestMessage> notifier;
 
     private NotifierRequestMessageSingleton() {
         notifier = new MessageUpdateNotifier<>();
     }
 
-    public static <T> NotifierRequestMessageSingleton<T> getInstance() {
+    public static NotifierRequestMessageSingleton getInstance() {
         if (instance == null)
             instance = new NotifierRequestMessageSingleton();
         return instance;
     }
 
-    public MessageUpdateNotifier<RequestMessage> getNotifier() {
+    public MessageUpdateNotifier<BurpRequestMessage> getNotifier() {
         return notifier;
     }
 }

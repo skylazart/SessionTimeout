@@ -1,21 +1,16 @@
 package burp.controller;
 
+import burp.message.BurpRequestMessage;
+import burp.notifier.NotifierAdapter;
+import burp.notifier.NotifierRequestMessageSingleton;
 import burp.uifactory.LayoutFactory;
 import burp.uifactory.UITypes;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +20,10 @@ import java.util.ResourceBundle;
  * Burp extension - session timeout verifier
  * Created by FSantos@trustwave.com on 3/31/17.
  */
-public class MainController {
+public class MainController implements NotifierAdapter<BurpRequestMessage> {
+    private static final Logger logger = LogManager.getLogger();
+
+
     @FXML
     private ResourceBundle resources;
 
@@ -71,6 +69,11 @@ public class MainController {
     @FXML
     private CheckBox chk24m;
 
+    private Tab firstTab;
+    private TabController firstTabController;
+    private int totalOfTabs = 0;
+    private boolean firstInitialized;
+
     @FXML
     void initialize() {
         assert mainLayout != null : "fx:id=\"mainLayout\" was not injected: check your FXML file 'mainLayout.fxml'.";
@@ -90,32 +93,19 @@ public class MainController {
         updateTotalOfTime();
 
         try {
-            Tab t = LayoutFactory.makeLayout(UITypes.TAB_LAYOUT);
-            t.setText("Test 1");
-            t.setId("Test 1");
-            Node n = t.getContent();
-            //n.addEventHandler(ActionEvent.ACTION, event -> System.out.println("T2 handling" + event));
-            tabPaneSessions.getTabs().add(t);
+            LayoutFactory<TabController> layoutFactory = new LayoutFactory<>();
 
-            Tab t2 = LayoutFactory.makeLayout(UITypes.TAB_LAYOUT);
-            t2.setText("Test 2");
-            t2.setId("Test 2");
-            Node n2 = t2.getContent();
-            //n2.addEventHandler(ActionEvent.ACTION, event -> System.out.println("T3 handling" + event));
-            tabPaneSessions.getTabs().add(t2);
+            String tabId = getTabId();
+            firstTab = layoutFactory.makeLayout(UITypes.TAB_LAYOUT);
+
+            firstTab.setText(tabId);
+            firstTab.setId(tabId);
+
+            firstTabController = layoutFactory.getController();
+            tabPaneSessions.getTabs().add(firstTab);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error loading {}:{}", UITypes.TAB_LAYOUT, e.getMessage(), e);
         }
-
-
-//        Tab addTab = new Tab("New");
-//        addTab.setClosable(false);
-//        addTab.setOnSelectionChanged(event -> {
-//            System.out.println("adding");
-//            tabPaneSessions.getSelectionModel().select(1);
-//        });
-//
-//        tabPaneSessions.getTabs().add(addTab);
     }
 
     @FXML
@@ -145,5 +135,42 @@ public class MainController {
             total += 24;
 
         lblTotal.setText(Integer.toString(total) + " minutes");
+    }
+
+    public MainController() {
+        NotifierRequestMessageSingleton.getInstance().getNotifier().register(this);
+    }
+
+    @Override
+    public void update(BurpRequestMessage data) {
+        if (!firstInitialized) {
+            firstInitialized = true;
+            firstTabController.setBurpRequestMessage(data);
+        } else {
+            try {
+                LayoutFactory<TabController> layoutFactory = new LayoutFactory<>();
+
+                Tab t = layoutFactory.makeLayout(UITypes.TAB_LAYOUT);
+                String tabId = getTabId();
+                t.setText(tabId);
+                t.setId(tabId);
+
+                TabController tabController = layoutFactory.getController();
+                if (tabController == null) {
+                    logger.error("Controller is null");
+                } else {
+                    tabController.setBurpRequestMessage(data);
+                }
+
+                tabPaneSessions.getTabs().add(t);
+            } catch (IOException e) {
+                logger.error("Error loading tab layout {}", e.getMessage(), e);
+            }
+        }
+    }
+
+    private String getTabId() {
+        totalOfTabs++;
+        return "Test " + Integer.toString(totalOfTabs);
     }
 }

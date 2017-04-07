@@ -9,7 +9,7 @@ import java.net.URL;
 public enum UITypes {
     MAIN_LAYOUT("/views/mainLayout.fxml"),
     ROOT_LAYOUT("/views/rootLayout.fxml"),
-    TAB_LAYOUT("/views/tabLayout.fxml");
+    TAB_LAYOUT("/views/tabLayoutNew.fxml");
 
     private String resourceName;
     private URL resource;

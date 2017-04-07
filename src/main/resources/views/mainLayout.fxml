@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -11,9 +10,10 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainAnchorPane" fx:id="mainLayout" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.152-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="burp.controller.MainController">
+<AnchorPane id="mainAnchorPane" fx:id="mainLayout" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="800.0" styleClass="root" stylesheets="@../default.css" xmlns="http://javafx.com/javafx/8.0.152-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="burp.controller.MainController">
    <children>
       <TabPane layoutX="94.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -25,98 +25,90 @@
                <content>
                   <AnchorPane id="optionsAnchorPane" fx:id="anchorOptions" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
                      <children>
-                        <Label layoutX="67.0" layoutY="38.0" text="Intervals" textFill="#ff8e00" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <effect>
-                              <Blend />
-                           </effect>
-                        </Label>
-                        <GridPane layoutX="44.0" layoutY="43.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="60.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+                        <VBox id="vboxOptions" layoutX="15.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <CheckBox fx:id="chk2m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="2 minutes" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk1m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="1 minute">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk6m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="6 minutes" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk8m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="8 minutes" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk16m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="16 minutes" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk20m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="20 minutes" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label text="Total:" textFill="#830101" GridPane.rowIndex="3" />
-                              <Label fx:id="lblTotal" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <CheckBox fx:id="chk4m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="4 minutes" GridPane.columnIndex="2">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk12m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="12 minutes" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="chk24m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="24 minutes" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </CheckBox>
+                              <Label styleClass="title" text="Intervals" textFill="#ff8e00">
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Label>
+                              <GridPane maxWidth="400.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <CheckBox fx:id="chk2m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="2 minutes" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="chk1m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="1 minute" />
+                                    <CheckBox fx:id="chk6m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="6 minutes" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="chk8m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="8 minutes" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="chk16m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" selected="true" text="16 minutes" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="chk20m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="20 minutes" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <Label text="Total:" GridPane.rowIndex="3" />
+                                    <Label fx:id="lblTotal" text="0 minutes" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="chk4m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="4 minutes" GridPane.columnIndex="2">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="chk12m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="12 minutes" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="chk24m" mnemonicParsing="false" onAction="#updateIntervalsCheckBox" text="24 minutes" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </GridPane>
                            </children>
-                        </GridPane>
-                        <Separator layoutY="42.0" prefHeight="3.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                        </VBox>
                      </children>
                   </AnchorPane>
                </content></Tab>
             <Tab id="optionsTab" text="About">
                <content>
-                  <AnchorPane id="optionsAnchorPane" fx:id="anchorOptions1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
+                  <AnchorPane id="optionsAnchorPane" fx:id="anchorOptions111" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
                      <children>
-                        <Label layoutX="67.0" layoutY="38.0" text="About" textFill="#ff8e00" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <effect>
-                              <Blend />
-                           </effect>
-                        </Label>
-                        <Separator layoutY="42.0" prefHeight="3.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-                        <TextArea editable="false" layoutX="20.0" layoutY="52.0" prefHeight="165.0" prefWidth="575.0" text="&#10;Author: Felipe Cerqueira&#10;I am a security consultant at Trustwave SpiderLabs.&#10;&#10;Contact: skylazart@gmail.com&#10;&#10;Please, feel free to visit my Github and contribute improving this tool:&#10;http://github.com/skylazart/SessionTimeout&#10;&#10;Thanks" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="52.0">
-                           <font>
-                              <Font name="Verdana" size="11.0" />
-                           </font>
-                        </TextArea>
+                        <VBox id="vboxAbout" layoutX="46.0" layoutY="55.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label styleClass="title" text="About" />
+                              <TextArea id="txtAbout" editable="false" prefHeight="165.0" prefWidth="575.0" text="&#10;Author: Felipe Cerqueira&#10;I am a security consultant at Trustwave SpiderLabs.&#10;&#10;Contact: skylazart@gmail.com&#10;&#10;Please, feel free to visit my Github and contribute improving this tool:&#10;http://github.com/skylazart/SessionTimeout&#10;&#10;Thanks">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
                </content>

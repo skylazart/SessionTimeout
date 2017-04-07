@@ -1,0 +1,44 @@
+.root {
+    -fx-font-size: 11px;
+}
+
+#vboxAbout {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    width: 100%;
+}
+
+#vboxOptions {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    width: 100%;
+}
+
+
+.title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff8e00;
+}
+
+#lblRequest {
+    -fx-text-fill: #ff8e00;
+}
+
+#lblResults {
+    -fx-text-fill: #ff8e00;
+}
+
+#txtAbout .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#txtAbout .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+#txtAbout .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+

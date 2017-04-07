@@ -2,8 +2,10 @@ package burp.UI;
 
 import burp.IBurpExtenderCallbacks;
 import burp.ITab;
-import burp.message.RequestMessage;
+import burp.controller.MainController;
+import burp.message.BurpRequestMessage;
 import burp.notifier.NotifierAdapter;
+import burp.notifier.NotifierRequestMessageSingleton;
 import burp.uifactory.LayoutFactory;
 import burp.uifactory.UITypes;
 import javafx.application.Platform;
@@ -11,6 +13,8 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.io.IOException;
@@ -19,27 +23,34 @@ import java.io.IOException;
  * CTF Webservice Gateway
  * Created by Felipe Cerqueira - skylazart[at]gmail.com on 3/22/17.
  */
-public class MainTab extends Tab implements ITab, NotifierAdapter<RequestMessage> {
-    private static final String SESSION_TIMEOUT = "Session Timeout";
-    private final IBurpExtenderCallbacks callbacks;
+public class MainTab extends Tab implements ITab, NotifierAdapter<BurpRequestMessage> {
+    private static final Logger logger = LogManager.getLogger();
+
+    private String SESSION_TIMEOUT = "Session Timeout";
     private JFXPanel mainJfxPanel;
 
     public MainTab(IBurpExtenderCallbacks callbacks) {
-        this.callbacks = callbacks;
-        mainJfxPanel = new JFXPanel();
-
-        Platform.runLater(() -> {
-            initFX();
-        });
+        try {
+            mainJfxPanel = new JFXPanel();
+            Platform.runLater(this::initFX);
+        } catch (RuntimeException e) {
+            logger.error("Runtime exception {}", e.getMessage(), e);
+        }
     }
 
     private void initFX() {
+        logger.debug("Initiating FX");
+
         try {
-            AnchorPane mainAnchorPane = LayoutFactory.makeLayout(UITypes.MAIN_LAYOUT);
+            LayoutFactory<MainController> layoutFactory = new LayoutFactory<>();
+            AnchorPane mainAnchorPane = layoutFactory.makeLayout(UITypes.MAIN_LAYOUT);
+
             Scene scene = new Scene(mainAnchorPane);
             mainJfxPanel.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            NotifierRequestMessageSingleton.getInstance().getNotifier().register(this);
+        } catch (IOException|RuntimeException e) {
+            logger.error("Error loading {}: {}", UITypes.MAIN_LAYOUT, e.getMessage(), e);
         }
     }
 
@@ -50,11 +61,11 @@ public class MainTab extends Tab implements ITab, NotifierAdapter<RequestMessage
 
     @Override
     public Component getUiComponent() {
-        return mainJfxPanel;
+            return mainJfxPanel;
     }
 
     @Override
-    public void update(RequestMessage data) {
-
+    public void update(BurpRequestMessage data) {
+        logger.debug("MainTab changing color to RED");
     }
 }

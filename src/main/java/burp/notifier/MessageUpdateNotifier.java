@@ -1,7 +1,5 @@
 package burp.notifier;
 
-import burp.message.RequestMessage;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,22 +8,25 @@ import java.util.List;
  * Created by FSantos@trustwave.com on 3/31/17.
  */
 public class MessageUpdateNotifier<T> {
-    public List<NotifierAdapter<T>> listOfAdapters = new ArrayList<>();
-    private Object b;
+    private List<NotifierAdapter<T>> listOfAdapters = new ArrayList<>();
+    private final Object mutex = new Object();
 
-    public MessageUpdateNotifier() {
+    MessageUpdateNotifier() {
 
     }
 
     public void update(T data) {
-        synchronized (b) {
+        if (listOfAdapters.size() == 0)
+            return;
+
+        synchronized (mutex) {
             for (NotifierAdapter<T> adapter: listOfAdapters)
                 adapter.update(data);
         }
     }
 
     public void register(NotifierAdapter<T> adapter) {
-        synchronized (b) {
+        synchronized (mutex) {
             listOfAdapters.add(adapter);
         }
     }
