@@ -1,5 +1,6 @@
 package burp.httpclient;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpResponse;
@@ -13,4 +14,5 @@ import java.util.List;
 public interface HttpClientAdapter {
     void onDataRead(HttpResponse httpResponse, List<HttpContent> httpContentList);
     void onError(ChannelHandlerContext ctx, Throwable cause);
+    void onErrorConnecting();
 }

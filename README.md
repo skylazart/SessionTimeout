@@ -1,4 +1,4 @@
-# SessionTimeout
+ # SessionTimeout
 Full featured Burp extension to check session timeout using JavaFX, log4j2 and Netty
 
 # Status

@@ -29,37 +29,16 @@ public class SessionTimeoutHttpMessage implements HttpMessage {
     private final byte[] raw;
 
     private final int len;
-    private final byte[] body;
+    private byte[] body;
 
     private final Map<String, String> headersByName = new HashMap<>();
 
-    /*
-    public SessionTimeoutHttpMessage(BurpRequestMessage burpRequestMessage) {
-        this.request = true;
-        IHttpRequestResponse request = burpRequestMessage.getHttpRequest();
-        this.raw = request.getRequest();
-        this.protocol = request.getProtocol();
-        this.host = request.getHost();
-        this.port = request.getPort();
-
-        this.method = parseMethod(raw);
-        this.uri = parseUri(raw);
-        this.version = parseVersion(raw);
-        this.headers = parseHeaders(raw);
-        this.body = parseBody(raw);
-    }
-
-    public SessionTimeoutHttpMessage(HttpResponse httpResponse, List<HttpContent> httpContentList) {
-        this.request = false;
-        this.protocol = httpResponse.protocolVersion().protocolName();
-    }
-    */
 
     public SessionTimeoutHttpMessage(byte[] raw, String protocol, String host, int port) {
         this.request = true;
         this.raw = raw;
 
-        this.protocol = "HTTPS";
+        this.protocol = protocol;
         this.host = host;
         this.port = port;
 
@@ -68,7 +47,9 @@ public class SessionTimeoutHttpMessage implements HttpMessage {
         this.version = parseVersion(raw);
         this.headers = parseHeaders(raw);
         this.len = getLength();
-        this.body = parseBody(raw, len);
+
+        if (len > 0)
+            this.body = parseBody(raw, len);
     }
 
     private int getLength() {
@@ -200,5 +181,10 @@ public class SessionTimeoutHttpMessage implements HttpMessage {
     @Override
     public String getHeaderValueByName(String name) {
         return headersByName.get(name);
+    }
+
+    @Override
+    public Set<Map.Entry<String, String>> getHeadersKeySet() {
+        return headersByName.entrySet();
     }
 }

@@ -1,6 +1,8 @@
 package burp.message;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Burp extension - session timeout verifier
@@ -17,4 +19,5 @@ public interface HttpMessage {
     List<String> getHeaders();
     byte[] getBody();
     String getHeaderValueByName(String name);
+    Set<Map.Entry<String, String>> getHeadersKeySet();
 }

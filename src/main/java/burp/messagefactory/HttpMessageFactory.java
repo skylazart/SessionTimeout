@@ -2,57 +2,49 @@ package burp.messagefactory;
 
 import burp.IHttpRequestResponse;
 import burp.message.BurpRequestMessage;
+import burp.message.SessionTimeoutHttpMessage;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.buffer.UnpooledByteBufAllocator;
+import io.netty.buffer.UnpooledDirectByteBuf;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpVersion;
+
+import java.util.Map;
 
 /**
  * Burp extension - session timeout verifier
  * Created by FSantos@trustwave.com on 4/3/17.
  */
 public class HttpMessageFactory {
-    public static HttpRequest makeRequest(BurpRequestMessage burpRequestMessage) throws InvalidMessage {
-        IHttpRequestResponse request = burpRequestMessage.getHttpRequest();
+    public static HttpRequest makeRequest(SessionTimeoutHttpMessage request) throws InvalidMessage {
+        HttpRequest httpRequest;
 
-        HttpMethod method;
-        HttpVersion version;
+        HttpMethod httpMethod = HttpMethod.valueOf(request.getMethod());
+        HttpVersion httpVersion = HttpVersion.valueOf(request.getVersion());
+        ByteBuf b = null;
 
-        byte[] b = request.getRequest();
-        String str = new String(b);
-
-        int idxEndMethod = str.indexOf(' ');
-        String methodStr = str.substring(0, idxEndMethod);
-        switch (methodStr) {
-            case "POST":
-                method = HttpMethod.POST;
-                break;
-            case "GET":
-                method = HttpMethod.GET;
-                break;
-            default:
-                throw new InvalidMessage("Not recognized method");
+        if (request.getBody() == null || request.getBody().length == 0) {
+            httpRequest = new DefaultFullHttpRequest(httpVersion, httpMethod, request.getUri());
+        } else {
+            b = Unpooled.directBuffer();
+            b.writeBytes(request.getBody());
+            httpRequest = new DefaultFullHttpRequest(httpVersion, httpMethod, request.getUri(), b);
         }
 
-        int idxBeginVersion = str.indexOf(" HTTP/1");
-        String versionStr = str.substring(idxBeginVersion + 1, idxBeginVersion + 9);
-        switch(versionStr) {
-            case "HTTP/1.0":
-                version = HttpVersion.HTTP_1_0;
-                break;
-            case "HTTP/1.1":
-                version = HttpVersion.HTTP_1_1;
-                break;
-            default:
-                throw new InvalidMessage("Unknown HTTP version");
+        for (Map.Entry<String, String> KV: request.getHeadersKeySet()) {
+            if (b != null && request.getBody().length > 0) {
+                if (KV.getKey().compareToIgnoreCase("Content-Length") == 0) {
+                    httpRequest.headers().add(KV.getKey(), b.readableBytes());
+                    continue;
+                }
+            }
+            httpRequest.headers().add(KV.getKey(), KV.getValue());
         }
 
-        String uri = str.substring(idxEndMethod + 1, idxBeginVersion);
-
-        HttpRequest httpRequest = new DefaultFullHttpRequest(version, method, uri);
-        httpRequest.headers().add("Host", burpRequestMessage.getHttpRequest().getHost());
         return httpRequest;
     }
+
 }

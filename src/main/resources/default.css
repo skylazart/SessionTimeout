@@ -1,5 +1,6 @@
 .root {
-    -fx-font-size: 11px;
+    -fx-font-family: Verdana;
+    -fx-font-size: 10px;
 }
 
 #vboxAbout {
@@ -42,3 +43,22 @@
     -fx-background-color: transparent;
 }
 
+#columnTime .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 10;
+}
+
+#columnResult .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 10;
+}
+
+#columnStatus .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 10;
+}
+
+#columnRawMsg .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 10;
+}

@@ -69,6 +69,10 @@ public class MainController implements NotifierAdapter<BurpRequestMessage> {
     @FXML
     private CheckBox chk24m;
 
+    @SuppressWarnings("unused")
+    @FXML
+    private CheckBox chkUseBurp;
+
     private Tab firstTab;
     private TabController firstTabController;
     private int totalOfTabs = 0;
