@@ -10,14 +10,17 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.proxy.HttpProxyHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.resolver.NoopAddressResolverGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.SSLException;
+import java.net.InetSocketAddress;
 
 /**
  * Burp extension - session timeout verifier
@@ -48,10 +51,12 @@ public class HttpClient {
         bootstrapSsl.group(group)
                 .channel(NioSocketChannel.class)
                 .handler(new HttpClientInitializer(sslCtx));
+        bootstrapSsl.resolver(NoopAddressResolverGroup.INSTANCE);
 
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
                 .handler(new HttpClientInitializer(null));
+        bootstrap.resolver(NoopAddressResolverGroup.INSTANCE);
     }
 
     public static synchronized HttpClient getInstance() throws SSLException {

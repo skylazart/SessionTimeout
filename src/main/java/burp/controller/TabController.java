@@ -50,8 +50,12 @@ public class TabController implements HttpClientAdapter {
     private DateTime begin;
     private DateTime lastTest;
 
-    private List<Period> testingIntervals = Arrays.asList(new Period().withMinutes(2),
-            new Period().withMinutes(5));
+    private List<Period> testingIntervals = Arrays.asList(
+            new Period().withMinutes(1),
+            new Period().withMinutes(6),
+            new Period().withMinutes(12),
+            new Period().withMinutes(17),
+            new Period().withMinutes(22));
 
     private int currentInterval;
 
@@ -157,7 +161,7 @@ public class TabController implements HttpClientAdapter {
             if (this.httpClient == null)
                 this.httpClient = HttpClient.getInstance();
 
-            String protocol = null;
+            String protocol;
             if (chkHttps.isSelected()) {
                 protocol = "HTTPS";
             } else {
@@ -248,7 +252,7 @@ public class TabController implements HttpClientAdapter {
             int beginIdx = Math.max(0, idx - 20);
             int endIdx = Math.min(responseNoLineBreaks.length(), idx + txtExpected.getLength() + 20);
 
-            tableResultData.add(new ResultData("Session is valid.", status,
+            tableResultData.add(new ResultData("Session is still valid.", status,
                     responseNoLineBreaks.substring(beginIdx, endIdx)));
         } else {
             tableResultData.add(new ResultData("Session expired.", status, responseNoLineBreaks.substring(0, 20)));
@@ -269,13 +273,10 @@ public class TabController implements HttpClientAdapter {
 
     @Override
     public void onErrorConnecting() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                logger.error("Error connecting...");
-                tableResultData.add(new ResultData("Error while connecting..."));
-                testCancelled();
-            }
+        Platform.runLater(() -> {
+            logger.error("Error connecting...");
+            tableResultData.add(new ResultData("Error while connecting..."));
+            testCancelled();
         });
     }
 
