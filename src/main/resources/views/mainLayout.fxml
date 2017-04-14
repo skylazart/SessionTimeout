@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -91,18 +92,22 @@
                                  </children>
                               </GridPane>
                               <Label styleClass="title" text="Proxy" />
-                              <GridPane>
+                              <GridPane maxWidth="400.0" VBox.vgrow="NEVER">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="432.0" minWidth="10.0" prefWidth="51.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="798.0" minWidth="10.0" prefWidth="349.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <CheckBox fx:id="chkUseBurp" mnemonicParsing="false" text="Use burp" />
+                                    <CheckBox fx:id="chkUseBurp" mnemonicParsing="false" text="Use burp" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Host:" />
+                                    <Label text="Port:" GridPane.rowIndex="1" />
+                                    <TextField maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.vgrow="NEVER" />
+                                    <TextField maxWidth="50.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
                                  </children>
                               </GridPane>
                            </children>
