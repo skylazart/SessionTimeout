@@ -52,9 +52,6 @@ public class TabController implements HttpClientAdapter {
 
     private List<Period> testingIntervals = Arrays.asList(
             new Period().withMinutes(1),
-            new Period().withMinutes(6),
-            new Period().withMinutes(12),
-            new Period().withMinutes(17),
             new Period().withMinutes(22));
 
     private int currentInterval;
